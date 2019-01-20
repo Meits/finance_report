@@ -1,0 +1,69 @@
+<template>
+  <div>
+          <div class="alert alert-danger" v-if="error && !success">
+              <p>There was an error, unable to complete registration.</p>
+          </div>
+          <div class="container register_wrap">
+              <form class="col s12" autocomplete="off"  v-on:submit.prevent="login" method="post">
+
+              <div class="row">
+                <h3>Login</h3>
+              </div>
+
+        <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" v-model="email" type="email" class="validate">
+                  <label for="email">Email</label>
+                </div>
+              </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" v-model="password" type="password" class="validate">
+            <label for="password">Password</label>
+          </div>
+        </div>
+
+         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+
+              </form>
+          </div>
+    </div>
+</template>
+
+<script>
+export default {
+    methods :  {
+        login : function () {
+            var app = this
+            this.$auth.login({
+                params: {
+                  email: app.email,
+                  password: app.password
+                },
+                success: function () {
+                },
+                error: function () {},
+                rememberMe: true,
+                redirect: '/categories',
+                fetchUser: true,
+                url : 'api/auth/login'
+            });
+
+        }
+    },
+  data: function () {
+    return {
+      email : '',
+      password : '',
+      error: false,
+      success : false,
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
