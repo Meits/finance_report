@@ -1,14 +1,107 @@
 <template>
-  <div>Results</div>
+  <div>
+            <form class="col s12" autocomplete="off"  v-on:submit.prevent="saveAmount" method="post">
+
+                <div class="row">
+                  <h3>Затраты</h3>
+                  <div><p>Всего за день: {{cTotalAmount}}</p></div>
+                </div>
+
+                  <div  class="row">
+                      <div class="input-field col s12 m12 l6">
+                      <input date class="datepicker date_start" type="text"  v-model="dateStart">
+                      <label class="active" for="dateStart">От</label>
+                      </div>
+
+                      <div class="input-field col s12 m12 l6">
+                      <input date class="datepicker  date_end" type="text"  v-model="dateEnd">
+                      <label class="active" for="dateEnd">До</label>
+                      </div>
+                  </div>
+
+                <div  class="row">
+                  <div v-for="field in cFields" class="input-field col s12 m12 l6">
+                    <input type="text" v-model="field.amount">
+                    <label class="active" for="name">{{field.type}}</label>
+                  </div>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                <i class="material-icons right">send</i>
+                </button>
+
+
+              </form>
+          <preloader v-if="isLoad" ></preloader>
+        </div>
 </template>
 
 <script>
-module.exports = {
+import Preloader from './parts/Preloader.vue';
+
+export default {
+    components : {
+        preloader : Preloader
+    },
+    methods : {
+        getResults : function() {
+
+
+                this.axios.post('/api/result',{
+                            dateStart : this.dateStart,
+                            dateEnd : this.dateEnd,
+                        }).then((response) => {
+                                      this.fields = response.data.fields
+                                      this.isLoad = false;
+                        })
+
+
+        }
+    },
   data: function () {
     return {
-      greeting: 'Hello'
-    }
-  }
+                fields: [],
+                isLoad : true,
+                dateStart : new Date(new Date().getFullYear(), new Date().getMonth(), 1).toLocaleDateString(),
+                dateEnd : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toLocaleDateString(),
+
+            }
+  },
+  mounted () {
+    this.getResults();
+    var app = this;
+    var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems,{
+                format : "dd.mm.yyyy",
+                onClose : function (vv) {
+                    app.getResults();
+                },
+                onSelect : function (value) {
+                    if(this.el.classList.contains('date_start')) {
+                        app.dateStart = value.toLocaleDateString();
+                    }
+                    if(this.el.classList.contains('date_end')) {
+                        app.dateEnd = value.toLocaleDateString();
+                    }
+                },
+
+            });
+  },
+   computed : {
+       cFields : function() {
+           return this.fields;
+       },
+       cTotalAmount : function() {
+           var result = 0;
+           this.fields.forEach(function(item) {
+               if(item.amount) {
+                   result += parseInt(item.amount);
+               }
+
+           });
+           return result;
+       }
+   }
 }
 </script>
 

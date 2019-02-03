@@ -1,7 +1,7 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <nav>
+    <div>
+        <div class="container">
+            <nav class="blue accent-3">
                 <ul class="list-inline">
                     <li>
                         <router-link :to="{ name: 'home' }">Home</router-link>
@@ -23,9 +23,11 @@
                 </ul>
             </nav>
         </div>
-        <div class="panel-body">
+        <div class="container content-wrap">
             <router-view></router-view>
         </div>
+
+
     </div>
 </template>
 

@@ -19,3 +19,8 @@ Route::middleware('auth:api')->get('/auth/user','Auth\LoginController@user');
 Route::get('/auth/refresh','Auth\LoginController@refresh');
 
 Route::middleware('auth:api')->get('/categories','Api\CategoriesController@index');
+Route::middleware('auth:api')->post('/categories','Api\CategoriesController@store');
+Route::middleware('auth:api')->delete('/categories/{category}','Api\CategoriesController@destroy');
+Route::middleware('auth:api')->post('/calc','Api\CalcController@index');
+Route::middleware('auth:api')->post('/calc/store', 'Api\CalcController@store');
+Route::middleware('auth:api')->post('/result', 'Api\ResultController@index');

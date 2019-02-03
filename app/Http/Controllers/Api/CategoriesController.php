@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Model\Field;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -49,7 +50,42 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user  = Auth::user();
+
+        if(!$user) {
+            abort('403');
+        }
+
+        $data = $request->all();
+
+        if(!isset($data['fields'])) {
+            abort('404');
+        }
+
+        $ids = array();
+
+        foreach($data['fields'] as $k =>$field) {
+            if(!$field) {
+                continue;
+            }
+            //print_r($user->fields->where('id',$k));
+            if($user->fields->where('id',$k)->isEmpty()) {
+                $model = new Field;
+                $model->type = $field;
+                $model->save();
+                array_push($ids,$model->id);
+            }
+        }
+
+        $user->fields()->attach($ids);
+        $user->load('fields');
+        return response()->json([
+            'success' => '1',
+            'ids' => $user->fields->transform(function($item) {
+                return $item->id;
+            })
+        ]);
     }
 
     /**
@@ -92,8 +128,19 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($category)
     {
-        //
+        //dd($user);
+        $user  = Auth::user();
+        if(!$user) {
+            abort('403');
+        }
+        $user->fields()->detach($category);
+        Field::destroy($category);
+
+        return response()->json([
+            'success' => '1'
+        ]);
+
     }
 }
