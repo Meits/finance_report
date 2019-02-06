@@ -1,13 +1,13 @@
 <template>
   <div>
           <div class="alert alert-danger" v-if="error && !success">
-              <p>There was an error, unable to complete registration.</p>
+              <p>Ошибка входа</p>
           </div>
           <div class="container register_wrap">
               <form class="col s12" autocomplete="off"  v-on:submit.prevent="login" method="post">
 
               <div class="row">
-                <h3>Login</h3>
+                <h3 class="col s12 m12 l12">Аутентификация</h3>
               </div>
 
         <div class="row">
@@ -19,11 +19,11 @@
         <div class="row">
           <div class="input-field col s12">
             <input id="password" v-model="password" type="password" class="validate">
-            <label for="password">Password</label>
+            <label for="password">Пароль</label>
           </div>
         </div>
 
-         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+         <button class="btn waves-effect waves-light" type="submit" name="action">Войти
             <i class="material-icons right">send</i>
           </button>
 

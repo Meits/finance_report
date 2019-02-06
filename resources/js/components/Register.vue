@@ -1,45 +1,45 @@
 <template>
     <div>
         <div class="alert alert-danger" v-if="error && !success">
-            <p>There was an error, unable to complete registration.</p>
+            <p>Ошибка регистрации</p>
         </div>
         <div class="container register_wrap">
             <form class="col s12" autocomplete="off"  v-on:submit.prevent="register" method="post">
 
             <div class="row">
-              <h3>Registration</h3>
+              <h3 class="col s12 m12 l12">Регистрация</h3>
               <div class="alert alert-success" v-if="success">
-                <p>Registration completed. You can now <router-link :to="{name:'login'}">sign in.</router-link></p>
+                <p>Регистрация завершена. Вы можете войти <router-link :to="{name:'login'}">Вход</router-link></p>
               </div>
             </div>
       <div class="row">
                     <div class="input-field col s12">
                       <input id="name" v-model="name" type="text" class="validate">
-                      <label for="name">Name</label>
+                      <label for="name">Имя</label>
                     </div>
                   </div>
       <div class="row">
               <div class="input-field col s12">
                 <input id="email" v-model="email" type="email" class="validate">
-                <label for="email">Email</label>
+                <label for="email">Email (используется в качестве логина)</label>
               </div>
             </div>
       <div class="row">
         <div class="input-field col s12">
           <input id="password" v-model="password" type="password" class="validate">
-          <label for="password">Password</label>
+          <label for="password">Пароль</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s12">
           <input id="password_confirmation" v-model="password_confirmation" type="password" class="validate">
-          <label for="password_confirmation">Password</label>
+          <label for="password_confirmation">Подтверждение пароля</label>
         </div>
       </div>
 
 
-       <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+       <button class="btn waves-effect waves-light" type="submit" name="action">Регистрация
           <i class="material-icons right">send</i>
         </button>
 
@@ -82,7 +82,7 @@ export default{
             },
             success: function () {
                 app.success = true;
-                M.toast({html: 'Registration completed.',classes: ['teal lighten-2']});
+                M.toast({html: 'Регистрация завершена.',classes: ['teal lighten-2']});
                 this.clearFields();
             },
             error: function (resp) {
