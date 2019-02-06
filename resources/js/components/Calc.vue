@@ -3,8 +3,8 @@
           <form class="col s12" autocomplete="off"  v-on:submit.prevent="saveAmount" method="post">
 
               <div class="row">
-                <h3>Затраты</h3>
-                <div><p>Всего за день: {{cTotalAmount}}</p></div>
+                <h3 class=" col s12 m12 l12">Затраты</h3>
+                <div class=" col s12 m12 l12"><p>Всего за день: {{cTotalAmount}}</p></div>
               </div>
 
                 <div  class="row">
@@ -23,7 +23,7 @@
                 </div>
               </div>
 
-              <button class="btn waves-effect waves-light" type="submit" name="action">Save
+              <button class="btn waves-effect waves-light" type="submit" name="action">Сохранить
               <i class="material-icons right">send</i>
               </button>
 
@@ -53,6 +53,9 @@ export default {
     methods : {
         addToValue : function (field, event) {
             let tmp = field.amount;
+            if(!field.amount) {
+                field.amount = 0;
+            }
             tmp = parseInt(field.amount) + parseInt(event.target.value);
             if(tmp) {
                 field.amount = tmp;
@@ -81,7 +84,7 @@ export default {
                 date : this.date
              }).then((response) => {
               this.isLoad = false;
-              M.toast({html: 'Saved.',classes: ['teal lighten-2']});
+              M.toast({html: 'Сохранено.',classes: ['teal lighten-2']});
             })
         }
     },

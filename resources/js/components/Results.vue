@@ -3,8 +3,8 @@
             <form class="col s12" autocomplete="off"  v-on:submit.prevent="saveAmount" method="post">
 
                 <div class="row">
-                  <h3>Затраты</h3>
-                  <div><p>Всего за день: {{cTotalAmount}}</p></div>
+                  <h3 class="col s12 m12 l12">Затраты</h3>
+                  <div class="col s12 m12 l12"><p>Всего за период: {{cTotalAmount}}</p></div>
                 </div>
 
                   <div  class="row">
@@ -26,7 +26,7 @@
                   </div>
                 </div>
 
-                <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                <button class="btn waves-effect waves-light" type="submit" name="action">Выбрать период
                 <i class="material-icons right">send</i>
                 </button>
 

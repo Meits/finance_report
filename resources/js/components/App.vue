@@ -4,21 +4,21 @@
             <nav class="blue accent-3">
                 <ul class="list-inline">
                     <li>
-                        <router-link :to="{ name: 'home' }">Home</router-link>
+                        <router-link :to="{ name: 'home' }">Главная</router-link>
                     </li>
                     <li v-if="!$auth.check()" class="pull-right">
-                                            <router-link :to="{ name: 'login' }">Login</router-link>
+                                            <router-link :to="{ name: 'login' }">Вход</router-link>
                                         </li>
                                         <li v-if="!$auth.check()" class="pull-right">
-                                            <router-link :to="{ name: 'register' }">Register</router-link>
+                                            <router-link :to="{ name: 'register' }">Регистрация</router-link>
                      <li>
-                        <router-link :to="{ name: 'categories' }">Categories</router-link>
+                        <router-link :to="{ name: 'categories' }">Категории</router-link>
                     </li>
                     <li class="pull-right">
-                        <router-link :to="{ name: 'calc' }">Calc</router-link>
+                        <router-link :to="{ name: 'calc' }">Внести затраты</router-link>
                     </li>
                      <li class="pull-right">
-                        <router-link :to="{ name: 'results' }">Results</router-link>
+                        <router-link :to="{ name: 'results' }">Подсчет затрат</router-link>
                     </li>
                 </ul>
             </nav>

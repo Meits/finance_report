@@ -3,7 +3,7 @@
         <form class="col s12" autocomplete="off"  v-on:submit.prevent="saveCategories" method="post">
 
             <div class="row">
-              <h3>Categories</h3>
+              <h3 class="col s12 m12 l12">Категории</h3>
             </div>
             <div  class="row">
               <div v-for="category in cCategories" class="input-field col s12 m12 l6">
@@ -13,10 +13,10 @@
               </div>
             </div>
 
-            <button class="btn waves-effect waves-light" type="submit" name="action">Save
+            <button class="btn waves-effect waves-light" type="submit" name="action">Сохранить
             <i class="material-icons right">send</i>
             </button>
-            <button @click.prevent="addCategory" class="btn waves-effect waves-light" name="action">Add new Category
+            <button @click.prevent="addCategory" class="btn waves-effect waves-light" name="action">Добавить категорию
             <i class="material-icons right">send</i>
             </button>
 
@@ -47,7 +47,7 @@ export default {
                             this.categories.splice(tmpIndCat, 1);
                           }
                           this.isLoad = false;
-                          M.toast({html: 'Deleted.',classes: ['teal lighten-2']});
+                          M.toast({html: 'Удалено.',classes: ['teal lighten-2']});
             })
         },
         getCategories : function () {
@@ -81,7 +81,7 @@ export default {
                 fields : fields
              }).then((response) => {
                 this.isLoad = false;
-               M.toast({html: 'Saved.',classes: ['teal lighten-2']});
+               M.toast({html: 'Сохранено.',classes: ['teal lighten-2']});
             })
         }
     },
