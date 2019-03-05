@@ -23,6 +23,7 @@ class CategoriesController extends Controller
             return array(
                 'id' => $item->id,
                 'type' => $item->type,
+                'is_profit' => $item->is_profit == true ? '1' : '0' ,
             );
         });
 
@@ -69,12 +70,19 @@ class CategoriesController extends Controller
             if(!$field) {
                 continue;
             }
-            //print_r($user->fields->where('id',$k));
+
             if($user->fields->where('id',$k)->isEmpty()) {
                 $model = new Field;
-                $model->type = $field;
+                $model->type = $field['type'];
+                $model->is_profit = $field['is_profit'];
                 $model->save();
                 array_push($ids,$model->id);
+            }
+            else {
+                $model = $user->fields->where('id',$k)->first();
+                $model->type = $field['type'];
+                $model->is_profit = $field['is_profit'];
+                $model->save();
             }
         }
 

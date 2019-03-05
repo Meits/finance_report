@@ -44,13 +44,22 @@ class ResultController extends Controller
 
 
         $fields = $user->fields->transform(function($field) {
-            $datas = 0;
-            $datas = $field->datas->sum('amount');
+            $datasAmount = 0;
+            $datasProfit = 0;
+
+            if($field->is_profit == 1) {
+                $datasProfit = $field->datas->sum('amount');
+            }
+            else {
+                $datasAmount = $field->datas->sum('amount');
+            }
 
             return array(
                 'id' => $field->id,
                 'type' => $field->type,
-                'amount' => $datas
+                'is_profit' => $field->is_profit ? 1 : 0 ,
+                'amount' => $datasAmount,
+                'profit' => $datasProfit,
             );
 
         });

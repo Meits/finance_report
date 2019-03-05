@@ -60,3 +60,5 @@ if(document.getElementById('app')) {
 }
 
 M.AutoInit();
+var elems = document.querySelectorAll('.sidenav');
+M.Sidenav.init(elems, options);

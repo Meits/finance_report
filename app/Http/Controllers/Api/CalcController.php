@@ -45,6 +45,7 @@ class CalcController extends Controller
             return array(
                         'id' => $field->id,
                         'type' => $field->type,
+                        'is_profit' => $field->is_profit ? 1 : 0 ,
                         'amount' => $datas
             );
 

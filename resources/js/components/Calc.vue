@@ -4,7 +4,8 @@
 
               <div class="row">
                 <h3 class=" col s12 m12 l12">Затраты</h3>
-                <div class=" col s12 m12 l12"><p>Всего за день: {{cTotalAmount}}</p></div>
+                <div class=" col s12 m12 l12"><p>Всего за день расход: {{cTotalAmount}}</p></div>
+                <div class=" col s12 m12 l12"><p>Всего за день доход: {{cTotalProfit}}</p></div>
               </div>
 
                 <div  class="row">
@@ -15,10 +16,14 @@
                 </div>
 
               <div  class="row">
-                <div v-for="field in cFields" class="input-field col s12 m12 l6">
-                  <input class="input-field__width-70" type="text" v-model.number="field.amount">
-                  +
-                  <input class="input-field__width-20" type="text" :value="tmpAdd" v-on:change="addToValue(field, $event)">
+                <div v-for="(field, index) in cFields" :key="field.id" class="input-field col s12 m12 l6">
+
+                  <input class="input-field__width-60" type="text" v-model.number="field.amount">
+
+                  <a v-on:click="subToValue(field)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
+                  <input :ref="field.id" class="input-field__width-20" type="text" :value="tmpAdd" v-on:change="">
+                  <a v-on:click="addToValue(field)" class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">add</i></a>
+
                   <label class="active" for="name">{{field.type}}</label>
                 </div>
               </div>
@@ -51,13 +56,31 @@ export default {
         }
     },
     methods : {
-        addToValue : function (field, event) {
+        addToValue : function (field) {
+            let value = this.$refs[field.id][0].value;
+
             let tmp = field.amount;
             if(!field.amount) {
                 field.amount = 0;
             }
-            tmp = parseInt(field.amount) + parseInt(event.target.value);
+            tmp = parseInt(field.amount) + parseInt(value);
             if(tmp) {
+                field.amount = tmp;
+            }
+        },
+        subToValue : function (field) {
+
+            let value = this.$refs[field.id][0].value;
+
+            let tmp = field.amount;
+            if(!field.amount) {
+                field.amount = 0;
+            }
+            tmp = parseInt(field.amount) - parseInt(value);
+            if(tmp && tmp > 0) {
+                field.amount = tmp;
+            }
+            else if(tmp == 0) {
                 field.amount = tmp;
             }
         },
@@ -110,7 +133,17 @@ export default {
         cTotalAmount : function() {
             var result = 0;
             this.fields.forEach(function(item) {
-                if(item.amount) {
+                if(item.amount && item.is_profit == 0) {
+                    result += parseInt(item.amount);
+                }
+
+            });
+            return result;
+        },
+        cTotalProfit : function() {
+            var result = 0;
+            this.fields.forEach(function(item) {
+                if(item.amount && item.is_profit == 1) {
                     result += parseInt(item.amount);
                 }
 

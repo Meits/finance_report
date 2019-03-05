@@ -4,7 +4,9 @@
 
                 <div class="row">
                   <h3 class="col s12 m12 l12">Затраты</h3>
-                  <div class="col s12 m12 l12"><p>Всего за период: {{cTotalAmount}}</p></div>
+                  <div class=" col s12 m12 l12"><p>Всего за период расход: {{cTotalAmount}}</p></div>
+                  <div class=" col s12 m12 l12"><p>Всего за период доход: {{cTotalProfit}}</p></div>
+                  <div class=" col s12 m12 l12"><p>Остаток : {{cTotalProfit - cTotalAmount}}</p></div>
                 </div>
 
                   <div  class="row">
@@ -21,7 +23,8 @@
 
                 <div  class="row">
                   <div v-for="field in cFields" class="input-field col s12 m12 l6">
-                    <input type="text" v-model="field.amount">
+                    <input v-if="field.is_profit == 0" type="text" v-model="field.amount">
+                    <input v-else="" type="text" v-model="field.profit">
                     <label class="active" for="name">{{field.type}}</label>
                   </div>
                 </div>
@@ -96,6 +99,16 @@ export default {
            this.fields.forEach(function(item) {
                if(item.amount) {
                    result += parseInt(item.amount);
+               }
+
+           });
+           return result;
+       },
+        cTotalProfit : function() {
+           var result = 0;
+           this.fields.forEach(function(item) {
+               if(item.profit && item.is_profit == 1) {
+                   result += parseInt(item.profit);
                }
 
            });
